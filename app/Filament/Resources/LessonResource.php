@@ -17,7 +17,13 @@ class LessonResource extends Resource
 {
     protected static ?string $model = Lesson::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-bookmark';
+    protected static ?string $navigationLabel = 'Mata Pelajaran';
+    protected static ?string $navigationGroup = 'Manajemen Jadwal KBM';
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $modelLabel = 'Mata Pelajaran';
+    protected static ?string $pluralModelLabel = 'Mata Pelajaran';
 
     public static function form(Form $form): Form
     {

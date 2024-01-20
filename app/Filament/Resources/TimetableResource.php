@@ -17,7 +17,13 @@ class TimetableResource extends Resource
 {
     protected static ?string $model = Timetable::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard';
+    protected static ?string $navigationLabel = 'Jadwal';
+    protected static ?string $navigationGroup = 'Manajemen Jadwal KBM';
+    protected static ?int $navigationSort = 5;
+    
+    protected static ?string $modelLabel = 'Jadwal';
+    protected static ?string $pluralModelLabel = 'Jadwal';
 
     public static function form(Form $form): Form
     {

@@ -17,7 +17,13 @@ class TimeslotResource extends Resource
 {
     protected static ?string $model = Timeslot::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clock';
+    protected static ?string $navigationLabel = 'Waktu';
+    protected static ?string $navigationGroup = 'Manajemen Jadwal KBM';
+    protected static ?int $navigationSort = 4;
+
+    protected static ?string $modelLabel = 'Waktu';
+    protected static ?string $pluralModelLabel = 'Waktu';
 
     public static function form(Form $form): Form
     {

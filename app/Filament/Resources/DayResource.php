@@ -17,7 +17,13 @@ class DayResource extends Resource
 {
     protected static ?string $model = Day::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-calendar';
+    protected static ?string $navigationLabel = 'Hari';
+    protected static ?string $navigationGroup = 'Manajemen Jadwal KBM';
+    protected static ?int $navigationSort = 3;
+
+    protected static ?string $modelLabel = 'Hari';
+    protected static ?string $pluralModelLabel = 'Hari';
 
     public static function form(Form $form): Form
     {
