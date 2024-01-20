@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('classrooms', function (Blueprint $table) {
             $table->id();
+            $table->enum('level', ['X', 'XI', 'XII']);
+            $table->text('name');
             $table->timestamps();
         });
     }
