@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('timetables', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('classroom_id')->constrained('classrooms')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('lesson_id')->constrained('lessons')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('teacher_id')->constrained('teachers')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('day');
+            $table->time('time_start');
+            $table->time('time_end');
             $table->timestamps();
         });
     }
