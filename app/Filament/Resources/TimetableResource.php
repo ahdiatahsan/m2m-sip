@@ -18,8 +18,8 @@ class TimetableResource extends Resource
     protected static ?string $model = Timetable::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard';
-    protected static ?string $navigationLabel = 'Jadwal';
-    protected static ?string $navigationGroup = 'Manajemen Jadwal KBM';
+    protected static ?string $navigationLabel = 'Jadwal Pembelajaran';
+    protected static ?string $navigationGroup = 'Penjadwalan';
     protected static ?int $navigationSort = 5;
     
     protected static ?string $modelLabel = 'Jadwal';

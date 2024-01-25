@@ -19,7 +19,7 @@ class DayResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar';
     protected static ?string $navigationLabel = 'Hari';
-    protected static ?string $navigationGroup = 'Manajemen Jadwal KBM';
+    protected static ?string $navigationGroup = 'Penjadwalan';
     protected static ?int $navigationSort = 3;
 
     protected static ?string $modelLabel = 'Hari';

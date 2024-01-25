@@ -19,7 +19,7 @@ class LessonResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-bookmark';
     protected static ?string $navigationLabel = 'Mata Pelajaran';
-    protected static ?string $navigationGroup = 'Manajemen Jadwal KBM';
+    protected static ?string $navigationGroup = 'Penjadwalan';
     protected static ?int $navigationSort = 1;
 
     protected static ?string $modelLabel = 'Mata Pelajaran';

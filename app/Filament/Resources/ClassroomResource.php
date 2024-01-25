@@ -19,7 +19,7 @@ class ClassroomResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-cube';
     protected static ?string $navigationLabel = 'Kelas';
-    protected static ?string $navigationGroup = 'Manajemen Jadwal KBM';
+    protected static ?string $navigationGroup = 'Penjadwalan';
     protected static ?int $navigationSort = 2;
 
     protected static ?string $modelLabel = 'Kelas';

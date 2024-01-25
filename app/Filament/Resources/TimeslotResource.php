@@ -19,7 +19,7 @@ class TimeslotResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-clock';
     protected static ?string $navigationLabel = 'Waktu';
-    protected static ?string $navigationGroup = 'Manajemen Jadwal KBM';
+    protected static ?string $navigationGroup = 'Penjadwalan';
     protected static ?int $navigationSort = 4;
 
     protected static ?string $modelLabel = 'Waktu';
