@@ -6,9 +6,13 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -27,27 +31,64 @@ class UserResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                //
-            ]);
+        ->schema([
+            Section::make()->schema([
+                TextInput::make('name')
+                    ->label('Nama')
+                    ->required()
+                    ->columnSpanFull(),
+                TextInput::make('email')
+                    ->email()
+                    ->required()
+                    ->columnSpanFull(),
+            ])
+                ->columns(2),
+            Section::make()->schema([
+                TextInput::make('password')
+                    ->password()
+                    ->revealable()
+                    ->confirmed()
+                    ->minLength(8)
+                    ->nullable(),
+                TextInput::make('password_confirmation')
+                    ->label('Konfirmasi Password')
+                    ->minLength(8)
+                    ->password()
+                    ->revealable(),
+            ])
+                ->columns(2),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')
+                    ->label('Nama')
+                    ->searchable(),
+                TextColumn::make('email')
+                    ->searchable(),
+                TextColumn::make('roles.name')
+                    ->label('Role')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'super_admin' => 'success',
+                        'admin' => 'danger',
+                        'teacher' => 'warning',
+                        'panel_user' => 'gray',
+                    })
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->hidden(fn (User $record): bool => $record->hasRole('super_admin')),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                //
             ]);
     }
 
