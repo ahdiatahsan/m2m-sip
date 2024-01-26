@@ -16,6 +16,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
 {
@@ -31,33 +32,39 @@ class UserResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-        ->schema([
-            Section::make()->schema([
-                TextInput::make('name')
-                    ->label('Nama')
-                    ->required()
-                    ->columnSpanFull(),
-                TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->columnSpanFull(),
-            ])
-                ->columns(2),
-            Section::make()->schema([
-                TextInput::make('password')
-                    ->password()
-                    ->revealable()
-                    ->confirmed()
-                    ->minLength(8)
-                    ->nullable(),
-                TextInput::make('password_confirmation')
-                    ->label('Konfirmasi Password')
-                    ->minLength(8)
-                    ->password()
-                    ->revealable(),
-            ])
-                ->columns(2),
-        ]);
+            ->schema([
+                Section::make()->schema([
+                    TextInput::make('name')
+                        ->label('Nama')
+                        ->required()
+                        ->columnSpanFull()
+                        ->autocomplete(false),
+                    TextInput::make('email')
+                        ->email()
+                        ->required()
+                        ->unique(ignoreRecord: true)
+                        ->columnSpanFull()
+                        ->autocomplete(false),
+                ])
+                    ->columns(2),
+                Section::make()->schema([
+                    TextInput::make('password')
+                        ->password()
+                        ->revealable()
+                        ->confirmed()
+                        ->minLength(8)
+                        ->nullable()
+                        ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                        ->dehydrated(fn ($state) => filled($state))
+                        ->required(fn (string $context): bool => $context === 'create'),
+                    TextInput::make('password_confirmation')
+                        ->label('Konfirmasi Password')
+                        ->minLength(8)
+                        ->password()
+                        ->revealable(),
+                ])
+                    ->columns(2),
+            ]);
     }
 
     public static function table(Table $table): Table
