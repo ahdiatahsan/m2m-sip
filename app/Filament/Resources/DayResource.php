@@ -6,9 +6,12 @@ use App\Filament\Resources\DayResource\Pages;
 use App\Filament\Resources\DayResource\RelationManagers;
 use App\Models\Day;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -29,7 +32,13 @@ class DayResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Section::make()->schema([
+                    TextInput::make('name')
+                        ->label('Nama')
+                        ->required()
+                        ->autocomplete(false),
+                ])
+                    ->columns(2),
             ]);
     }
 
@@ -37,18 +46,19 @@ class DayResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')
+                    ->label('Nama Hari'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 
@@ -63,8 +73,8 @@ class DayResource extends Resource
     {
         return [
             'index' => Pages\ListDays::route('/'),
-            'create' => Pages\CreateDay::route('/create'),
-            'edit' => Pages\EditDay::route('/{record}/edit'),
+            // 'create' => Pages\CreateDay::route('/create'),
+            // 'edit' => Pages\EditDay::route('/{record}/edit'),
         ];
     }
 }
