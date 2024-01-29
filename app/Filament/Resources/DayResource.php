@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\DayResource\Pages;
 use App\Filament\Resources\DayResource\RelationManagers;
+use App\Filament\Resources\DayResource\RelationManagers\TimeslotsRelationManager;
 use App\Models\Day;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
@@ -38,7 +39,6 @@ class DayResource extends Resource
                         ->required()
                         ->autocomplete(false),
                 ])
-                    ->columns(2),
             ]);
     }
 
@@ -53,7 +53,7 @@ class DayResource extends Resource
                 //
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([
@@ -65,7 +65,7 @@ class DayResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TimeslotsRelationManager::class
         ];
     }
 
@@ -74,7 +74,7 @@ class DayResource extends Resource
         return [
             'index' => Pages\ListDays::route('/'),
             // 'create' => Pages\CreateDay::route('/create'),
-            // 'edit' => Pages\EditDay::route('/{record}/edit'),
+            'edit' => Pages\EditDay::route('/{record}/edit'),
         ];
     }
 }
