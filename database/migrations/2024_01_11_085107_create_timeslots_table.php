@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->time('time_start');
             $table->time('time_end');
+            $table->string('full_time');
             $table->timestamps();
         });
     }
