@@ -15,13 +15,22 @@ class Timetable extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'day',
-        'time_start',
-        'time_end',
+        'day_id',
+        'timeslot_id',
         'classroom_id',
         'lesson_id',
         'teacher_id',
     ];
+
+    public function day()
+    {
+        return $this->belongsTo(Day::class);
+    }
+
+    public function timeslot()
+    {
+        return $this->belongsTo(Timeslot::class);
+    }
 
     public function classroom()
     {
