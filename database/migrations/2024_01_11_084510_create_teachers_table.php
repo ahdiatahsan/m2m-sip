@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('nip')->nullable()->unique();
             $table->string('phone');
-            $table->string('address');
+            // $table->string('address');
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('lesson_id')->nullable()->constrained('lessons')->cascadeOnUpdate();
             $table->timestamps();

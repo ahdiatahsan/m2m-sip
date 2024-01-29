@@ -18,7 +18,7 @@ class TeacherSeeder extends Seeder
             'code' => 'A1',
             'nip' => '123456789',
             'phone' => '081212345678',
-            'address' => 'Makassar',
+            // 'address' => 'Makassar',
             'user_id' => 3
         ]);
     }

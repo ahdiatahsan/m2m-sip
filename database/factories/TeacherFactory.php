@@ -21,7 +21,7 @@ class TeacherFactory extends Factory
             'code' => strtoupper(fake()->bothify('?#')),
             'nip' => fake()->randomNumber(9, true),
             'phone' => fake()->phoneNumber(),
-            'address' => 'Makassar',
+            // 'address' => 'Makassar',
         ];
     }
 }

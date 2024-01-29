@@ -60,15 +60,10 @@ class TeacherResource extends Resource
                         ->tel()
                         ->required()
                         ->autocomplete(false),
-                    TextInput::make('address')
-                        ->label('Alamat')
-                        ->required()
-                        ->autocomplete(false),
                     Select::make('lesson_id')
                         ->label('Mata Pelajaran')
                         ->required()
                         ->relationship('lesson', 'name')
-                        ->columnSpanFull()
                         ->native(false)
                         ->searchable(),
                 ])
