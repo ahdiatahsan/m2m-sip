@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('timetables', function (Blueprint $table) {
             $table->id();
             $table->foreignId('classroom_id')->constrained('classrooms')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('day_id')->nullable()->constrained('days')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('timeslot_id')->nullable()->constrained('timeslots')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('lesson_id')->nullable()->constrained('lessons')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('teacher_id')->nullable()->constrained('teachers')->cascadeOnUpdate()->nullOnDelete();
-            $table->string('day');
-            $table->time('time_start');
-            $table->time('time_end');
             $table->timestamps();
         });
     }

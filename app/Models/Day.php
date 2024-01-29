@@ -22,4 +22,9 @@ class Day extends Model
     {
         return $this->belongsToMany(Timeslot::class, 'day_time')->withTimestamps();
     }
+
+    public function timetables()
+    {
+        return $this->hasMany(Timetable::class);
+    }
 }
