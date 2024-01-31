@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ClassroomResource\Pages;
 use App\Filament\Resources\ClassroomResource\RelationManagers;
+use App\Filament\Resources\ClassroomResource\RelationManagers\TimetablesRelationManager;
 use App\Models\Classroom;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
@@ -59,14 +60,6 @@ class ClassroomResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            // ->groups([
-            //     Group::make('level')
-            //         ->getTitleFromRecordUsing(fn (Classroom $record): string => 'Kelas ' . $record->level)
-            //         ->titlePrefixedWithLabel(false)
-            //         ->collapsible()
-            // ])
-            // ->groupingSettingsHidden()
-            // ->defaultGroup('level')
             ->columns([
                 TextColumn::make('name')
                     ->label('Nama Kelas')
@@ -98,7 +91,7 @@ class ClassroomResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TimetablesRelationManager::class
         ];
     }
 
