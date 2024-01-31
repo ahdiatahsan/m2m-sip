@@ -1,0 +1,66 @@
+<?php
+
+namespace App\Filament\Pages;
+
+use App\Models\Timetable;
+use Filament\Pages\Page;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Grouping\Group;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+
+class MyTimetable extends Page implements HasForms, HasTable
+{
+    use InteractsWithTable;
+    use InteractsWithForms;
+
+    protected static ?string $title = 'Jadwal Saya';
+    protected static bool $shouldRegisterNavigation = false;
+    protected static string $view = 'filament.pages.my-timetable';
+
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasRole('teacher');
+    }
+
+    public function table(Table $table): Table
+    {
+        return $table
+            ->paginated(false)
+            ->query(Timetable::query()->where('teacher_id', auth()->user()->id))
+            ->columns([
+                TextColumn::make('timeslot.full_time')
+                    ->label('Waktu'),
+                TextColumn::make('lesson.name')
+                    ->label('Mata Pelajaran'),
+                TextColumn::make('classroom.name')
+                    ->label('Kelas'),
+            ])
+            ->groups([
+                Group::make('day.name')
+                    ->label('Hari')
+                    ->titlePrefixedWithLabel(false)
+
+                    ->orderQueryUsing(
+                        fn (Builder $query, string $direction) => $query->orderBy('id', 'asc')
+                    )
+            ])
+            ->groupingSettingsHidden()
+            ->defaultGroup('day.name')
+            ->filters([
+                //
+            ])
+            ->headerActions([
+                // Tables\Actions\CreateAction::make(),
+            ])
+            ->actions([
+                // Tables\Actions\EditAction::make(),
+                // Tables\Actions\DeleteAction::make(),
+            ]);
+    }
+}

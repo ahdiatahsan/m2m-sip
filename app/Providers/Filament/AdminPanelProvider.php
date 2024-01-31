@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\EditProfile;
+use App\Filament\Pages\MyTimetable;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -18,6 +19,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
@@ -30,8 +32,12 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->profile()
-            ->userMenuItems([ 
-                'profile' => MenuItem::make()->url(fn (): string => EditProfile::getUrl())
+            ->userMenuItems([
+                'profile' => MenuItem::make()->url(fn (): string => EditProfile::getUrl()),
+                'Jadwal Saya' => MenuItem::make()->url(fn (): string => MyTimetable::getUrl())
+                    ->label('Jadwal Saya')
+                    ->icon('heroicon-o-clipboard')
+                    ->visible(fn (): bool => auth()->user()->hasRole('teacher')),
             ])
             ->colors([
                 'primary' => Color::Green,
