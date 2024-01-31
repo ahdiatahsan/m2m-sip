@@ -30,7 +30,7 @@ class EditProfile extends Page implements HasForms
     public ?string $password_confirmation = null;
     public ?string $nip = null;
     public ?string $phone = null;
-    public ?string $address = null;
+    // public ?string $address = null;
 
     public User $user;
 
@@ -47,7 +47,7 @@ class EditProfile extends Page implements HasForms
                 /* Extra Informations */
                 'nip' => $activeUser->teachers->nip,
                 'phone' => $activeUser->teachers->phone,
-                'address' => $activeUser->teachers->address,
+                // 'address' => $activeUser->teachers->address,
             ]);
         } else {
             $this->form->fill([
@@ -79,8 +79,8 @@ class EditProfile extends Page implements HasForms
                     TextInput::make('name')
                         ->label('Nama')
                         ->required()
-                        ->visible($teacher)
-                        ->columnSpanFull(),
+                        ->visible($teacher),
+                        // ->columnSpanFull(),
                     TextInput::make('nip')
                         ->label('NIP')
                         ->required()
@@ -90,10 +90,10 @@ class EditProfile extends Page implements HasForms
                         ->tel()
                         ->required()
                         ->visible($teacher),
-                    TextInput::make('address')
-                        ->label('Alamat')
-                        ->required()
-                        ->visible($teacher),
+                    // TextInput::make('address')
+                    //     ->label('Alamat')
+                    //     ->required()
+                    //     ->visible($teacher),
                     TextInput::make('email')
                         ->email()
                         ->required()
@@ -138,7 +138,7 @@ class EditProfile extends Page implements HasForms
                 /* Extra Informations */
                 'nip' => $this->nip,
                 'phone' => $this->phone,
-                'address' => $this->address,
+                // 'address' => $this->address,
             ]);
             
             /** @var \App\Models\User */
