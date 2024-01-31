@@ -37,7 +37,8 @@ class DayResource extends Resource
                     TextInput::make('name')
                         ->label('Nama')
                         ->required()
-                        ->autocomplete(false),
+                        ->autocomplete(false)
+                        ->disabled(),
                 ])
             ]);
     }

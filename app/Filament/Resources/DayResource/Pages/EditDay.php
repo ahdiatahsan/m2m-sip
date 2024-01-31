@@ -16,4 +16,10 @@ class EditDay extends EditRecord
             // Actions\DeleteAction::make(),
         ];
     }
+
+    protected function getSaveFormAction(): \Filament\Actions\Action
+    {
+        return parent::getSaveFormAction()
+            ->disabled();
+    }
 }
