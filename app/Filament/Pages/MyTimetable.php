@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\Teacher;
 use App\Models\Timetable;
 use Filament\Pages\Page;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -30,9 +31,11 @@ class MyTimetable extends Page implements HasForms, HasTable
 
     public function table(Table $table): Table
     {
+        $teacher = Teacher::query()->where('user_id', auth()->user()->id)->first();
+
         return $table
             ->paginated(false)
-            ->query(Timetable::query()->where('teacher_id', auth()->user()->id))
+            ->query(Timetable::query()->where('teacher_id', $teacher->id))
             ->columns([
                 TextColumn::make('timeslot.full_time')
                     ->label('Waktu'),
