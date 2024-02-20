@@ -78,7 +78,7 @@ class ClassroomResource extends Resource
                     ])
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()
             ])
@@ -101,7 +101,7 @@ class ClassroomResource extends Resource
         return [
             'index' => Pages\ListClassrooms::route('/'),
             'create' => Pages\CreateClassroom::route('/create'),
-            'view' => Pages\ViewClassroom::route('/{record}'),
+            // 'view' => Pages\ViewClassroom::route('/{record}'),
             'edit' => Pages\EditClassroom::route('/{record}/edit'),
         ];
     }
