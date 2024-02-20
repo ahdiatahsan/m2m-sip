@@ -9,9 +9,9 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-// use Filament\Tables\Columns\TextColumn;
-// use Filament\Tables\Filters\SelectFilter;
-// use Filament\Tables\Grouping\Group;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class TimetableResource extends Resource
 {
     protected static ?string $model = Timetable::class;
-    protected static bool $shouldRegisterNavigation = false;
+    // protected static bool $shouldRegisterNavigation = false;
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard';
     protected static ?string $navigationLabel = 'Jadwal Pembelajaran';
@@ -40,42 +40,44 @@ class TimetableResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->paginated(false)
             ->columns([
-                // TextColumn::make('timeslot.full_time')
-                //     ->label('Waktu')
-                //     ->searchable(),
-                // TextColumn::make('lesson.name')
-                //     ->label('Mata Pelajaran')
-                //     ->searchable(),
-                // TextColumn::make('teacher.name')
-                //     ->label('Guru'),
+                TextColumn::make('day.name')
+                    ->label('Hari'),
+                    // ->visible(false),
+                TextColumn::make('timeslot.full_time')
+                    ->label('Waktu')
+                    ->searchable(),
+                TextColumn::make('lesson.name')
+                    ->label('Mata Pelajaran')
+                    ->searchable(),
+                TextColumn::make('teacher.name')
+                    ->label('Guru'),
             ])
-            // ->groups([
-            //     Group::make('day.name')
-            //         ->label('Hari')
-            //         ->titlePrefixedWithLabel(false)
+            ->groups([
+                Group::make('day.name')
+                    ->label('Hari')
+                    ->titlePrefixedWithLabel(false)
 
-            //         ->orderQueryUsing(
-            //             fn (Builder $query, string $direction) => $query->orderBy('id', 'asc')
-            //         )
-            // ])
-            // ->groupingSettingsHidden()
-            // ->defaultGroup('day.name')
+                    ->orderQueryUsing(
+                        fn (Builder $query, string $direction) => $query->orderBy('id', 'asc')
+                    )
+            ])
+            ->groupingSettingsHidden()
+            ->defaultGroup('day.name')
             ->filters([
-                // SelectFilter::make('classroom')
-                //     ->relationship('classroom', 'name')
-                //     ->default(2)
-                //     ->label('Kelas')
-                //     ->searchable()
-                //     ->preload()
+                SelectFilter::make('classroom')
+                    ->relationship('classroom', 'name')
+                    ->default(1)
+                    ->label('Kelas')
+                    ->searchable()
+                    ->preload()
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                // Tables\Actions\BulkActionGroup::make([
-                //     Tables\Actions\DeleteBulkAction::make(),
-                // ]),
+                // ExportBulkAction::make() 
             ]);
     }
 
@@ -89,7 +91,7 @@ class TimetableResource extends Resource
     public static function getPages(): array
     {
         return [
-            // 'index' => Pages\ListTimetables::route('/'),
+            'index' => Pages\ListTimetables::route('/'),
             // 'create' => Pages\CreateTimetable::route('/create'),
             // 'edit' => Pages\EditTimetable::route('/{record}/edit'),
         ];
