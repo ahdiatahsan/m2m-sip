@@ -13,6 +13,10 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use pxlrbt\FilamentExcel\Actions\Pages\ExportAction;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportAction as TablesExportAction;
+use pxlrbt\FilamentExcel\Columns\Column;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class MyTimetable extends Page implements HasForms, HasTable
 {
@@ -37,6 +41,8 @@ class MyTimetable extends Page implements HasForms, HasTable
             ->paginated(false)
             ->query(Timetable::query()->where('teacher_id', $teacher->id))
             ->columns([
+                TextColumn::make('day.name')
+                    ->label('Hari'),
                 TextColumn::make('timeslot.full_time')
                     ->label('Waktu'),
                 TextColumn::make('lesson.name')
@@ -60,6 +66,16 @@ class MyTimetable extends Page implements HasForms, HasTable
             ])
             ->headerActions([
                 // Tables\Actions\CreateAction::make(),
+                TablesExportAction::make() 
+                ->exports([
+                    ExcelExport::make()
+                        ->fromTable()
+                        ->withColumns([
+                            Column::make('day.name')->heading('Hari')
+                        ])
+                        ->withFilename('Jadwal Mengajar Saya')
+                        ->withWriterType(\Maatwebsite\Excel\Excel::XLSX)
+                ]), 
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
