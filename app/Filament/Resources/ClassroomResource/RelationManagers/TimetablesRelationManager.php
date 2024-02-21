@@ -59,7 +59,6 @@ class TimetablesRelationManager extends RelationManager
                         ->searchable(),
                     Forms\Components\Select::make('teacher_id')
                         ->label('Guru')
-                        ->required()
                         ->native(false)
                         ->options(function (callable $get) {
                             $lesson = Lesson::find($get('lesson_id'));
