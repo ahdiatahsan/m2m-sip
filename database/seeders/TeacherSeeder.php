@@ -14,7 +14,7 @@ class TeacherSeeder extends Seeder
     public function run(): void
     {
         $teacher = Teacher::factory()->create([
-            'name' => 'Teacher A',
+            'name' => 'Guru',
             'code' => 'A1',
             'nip' => '123456789',
             'phone' => '081212345678',
