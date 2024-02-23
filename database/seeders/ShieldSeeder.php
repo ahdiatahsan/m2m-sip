@@ -28,20 +28,13 @@ class ShieldSeeder extends Seeder
         $superAdministratorUser = User::factory()->create([
             'name' => 'Super Administrator',
             'email' => 'superadmin@mail.com',
-            'password' => 'password'
+            'password' => 'man2makassar'
         ]);
 
         // Create administrator
         $administratorUser = User::factory()->create([
             'name' => 'Administrator',
             'email' => 'admin@mail.com',
-            'password' => 'password'
-        ]);
-
-        // Create teacher
-        $teacherUser = User::factory()->create([
-            'name' => 'Guru',
-            'email' => 'guru@mail.com',
             'password' => 'man2makassar'
         ]);
 
@@ -52,6 +45,13 @@ class ShieldSeeder extends Seeder
             'password' => 'man2makassar'
         ]);
 
+        // Create teacher
+        $teacherUser = User::factory()->create([
+            'name' => 'Dewi Rahma',
+            'email' => 'dewi@mail.com',
+            'password' => 'man2makassar'
+        ]);
+
         // Assign super administrator user to super_admin role
         $superAdministratorUser->assignRole('super_admin');
 
@@ -59,10 +59,10 @@ class ShieldSeeder extends Seeder
         $administratorUser->assignRole('admin');
 
         // Assign teacher user to teacher role
-        $teacherUser->assignRole('teacher');
+        $studentUser->assignRole('student');
 
         // Assign teacher user to teacher role
-        $studentUser->assignRole('student');
+        $teacherUser->assignRole('teacher');
 
         // Show success info
         $this->command->info('Shield Seeding Completed.');
