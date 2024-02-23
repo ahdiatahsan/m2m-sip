@@ -13,13 +13,13 @@ class TeacherSeeder extends Seeder
      */
     public function run(): void
     {
-        $teacher = Teacher::factory()->create([
-            'name' => 'Guru',
-            'code' => 'A1',
-            'nip' => '123456789',
-            'phone' => '081212345678',
-            // 'address' => 'Makassar',
-            'user_id' => 3
+        $teacher = Teacher::create([
+            'name' => 'Dewi Rahma, S.Pd',
+            'code' => '90',
+            'nip' => '0',
+            'phone' => '0',
+            'lesson_id' => 28,
+            'user_id' => 4
         ]);
     }
 }
