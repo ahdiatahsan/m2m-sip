@@ -17,10 +17,10 @@ class TeacherFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'code' => strtoupper(fake()->bothify('?#')),
-            'nip' => fake()->randomNumber(9, true),
-            'phone' => fake()->phoneNumber(),
+            // 'name' => fake()->name(),
+            // 'code' => strtoupper(fake()->bothify('?#')),
+            // 'nip' => fake()->randomNumber(9, true),
+            // 'phone' => fake()->phoneNumber(),
             // 'address' => 'Makassar',
         ];
     }
