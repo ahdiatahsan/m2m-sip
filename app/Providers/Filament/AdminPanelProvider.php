@@ -31,9 +31,10 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->profile()
             ->userMenuItems([
-                'profile' => MenuItem::make()->url(fn (): string => EditProfile::getUrl()),
+                'profile' => MenuItem::make()->url(fn (): string => EditProfile::getUrl())
+                    ->label('Profil')
+                    ->visible(fn (): bool => auth()->user()->hasAnyRole(['super_admin', 'admin', 'teacher'])),
                 'Jadwal Saya' => MenuItem::make()->url(fn (): string => MyTimetable::getUrl())
                     ->label('Jadwal Saya')
                     ->icon('heroicon-o-clipboard')
