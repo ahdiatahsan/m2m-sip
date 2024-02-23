@@ -206,7 +206,7 @@ class RoleResource extends Resource implements HasShieldPermissions
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->where('id', '!=', 4);
+        return parent::getEloquentQuery()->where('id', '!=', 5);
     }
 
     public static function table(Table $table): Table
