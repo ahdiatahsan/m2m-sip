@@ -32,6 +32,11 @@ class EditProfile extends Page implements HasForms
     public ?string $phone = null;
     // public ?string $address = null;
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasAnyRole(['super_admin', 'admin', 'teacher']);
+    }
+
     public User $user;
 
     public function mount(): void
@@ -83,12 +88,12 @@ class EditProfile extends Page implements HasForms
                         // ->columnSpanFull(),
                     TextInput::make('nip')
                         ->label('NIP')
-                        ->required()
+                        ->nullable()
                         ->visible($teacher),
                     TextInput::make('phone')
                         ->label('Nomor Telepon')
                         ->tel()
-                        ->required()
+                        ->nullable()
                         ->visible($teacher),
                     // TextInput::make('address')
                     //     ->label('Alamat')

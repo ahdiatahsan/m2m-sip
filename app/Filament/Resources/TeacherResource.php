@@ -58,7 +58,7 @@ class TeacherResource extends Resource
                     TextInput::make('phone')
                         ->label('Telepon')
                         ->tel()
-                        ->required()
+                        ->nullable()
                         ->autocomplete(false),
                     Select::make('lesson_id')
                         ->label('Mata Pelajaran')
