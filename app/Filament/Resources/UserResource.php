@@ -83,6 +83,7 @@ class UserResource extends Resource
                         'super_admin' => 'success',
                         'admin' => 'danger',
                         'teacher' => 'warning',
+                        'student' => 'info',
                         'panel_user' => 'gray',
                     })
             ])
