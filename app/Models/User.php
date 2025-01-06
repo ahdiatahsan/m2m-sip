@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
-use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Config;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -16,7 +15,6 @@ class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable;
     use HasRoles;
-    use HasPanelShield;
 
     /**
      * The attributes that are mass assignable.
@@ -52,5 +50,11 @@ class User extends Authenticatable implements FilamentUser
     public function teachers()
     {
         return $this->hasOne(Teacher::class);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return Config::get('APP_ENV') == 'local' ? str_ends_with($this->email, '@mail.com') :
+            $this->hasVerifiedEmail();
     }
 }
