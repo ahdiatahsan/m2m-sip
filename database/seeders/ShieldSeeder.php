@@ -25,31 +25,35 @@ class ShieldSeeder extends Seeder
         static::makeDirectPermissions($directPermissions);
 
         // Create super administrator
-        $superAdministratorUser = User::factory()->create([
+        $superAdministratorUser = User::create([
             'name' => 'Super Administrator',
             'email' => 'superadmin@mail.com',
-            'password' => 'man2makassar'
+            'password' => bcrypt('man2makassar'),
+            'email_verified_at' => now()
         ]);
 
         // Create administrator
-        $administratorUser = User::factory()->create([
+        $administratorUser = User::create([
             'name' => 'Administrator',
             'email' => 'admin@mail.com',
-            'password' => 'man2makassar'
+            'password' => bcrypt('man2makassar'),
+            'email_verified_at' => now()
         ]);
 
         // Create student
-        $studentUser = User::factory()->create([
-            'name' => 'Siswa',
+        $studentUser = User::create([
+            'name' => 'Siswa Man 2 Makassar',
             'email' => 'siswa@mail.com',
-            'password' => 'man2makassar'
+            'password' => bcrypt('man2makassar'),
+            'email_verified_at' => now()
         ]);
 
         // Create teacher
-        $teacherUser = User::factory()->create([
-            'name' => 'Dewi Rahma',
+        $teacherUser = User::create([
+            'name' => 'Dewi Rahma, S.Pd',
             'email' => 'dewi@mail.com',
-            'password' => 'man2makassar'
+            'password' => bcrypt('man2makassar'),
+            'email_verified_at' => now()
         ]);
 
         // Assign super administrator user to super_admin role
