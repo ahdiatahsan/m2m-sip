@@ -1,0 +1,15 @@
+.fi-resource-timetables .fi-badge-delete-button {
+    pointer-events: none !important;
+    opacity: 0 !important;
+    cursor: default !important;
+    width: 0 !important;
+    overflow: hidden !important;
+}
+
+.fi-resource-timetables .fi-ta-filter-indicators .fi-icon-btn{
+    pointer-events: none !important;
+    opacity: 0 !important;
+    cursor: default !important;
+    width: 0 !important;
+    overflow: hidden !important;
+}

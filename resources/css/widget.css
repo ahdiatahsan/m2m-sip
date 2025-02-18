@@ -1,0 +1,15 @@
+.fi-dashboard-page .fi-badge-delete-button {
+    pointer-events: none !important;
+    opacity: 0 !important;
+    cursor: default !important;
+    width: 0 !important;
+    overflow: hidden !important;
+}
+
+.fi-dashboard-page .fi-ta-filter-indicators .fi-icon-btn{
+    pointer-events: none !important;
+    opacity: 0 !important;
+    cursor: default !important;
+    width: 0 !important;
+    overflow: hidden !important;
+}
