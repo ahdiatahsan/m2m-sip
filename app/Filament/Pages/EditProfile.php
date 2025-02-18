@@ -5,12 +5,12 @@ namespace App\Filament\Pages;
 use App\Models\User;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Section;
-use Filament\Pages\Page;
-use Filament\Forms\Form;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Pages\Page;
 use Filament\Support\Exceptions\Halt;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -18,17 +18,24 @@ use Illuminate\Support\Facades\Hash;
 class EditProfile extends Page implements HasForms
 {
     protected static ?string $title = 'Profil';
+
     protected static bool $shouldRegisterNavigation = false;
+
     protected static string $view = 'filament.pages.edit-profile';
 
     use InteractsWithForms;
 
     // Form field properties
     public ?string $name = null;
+
     public ?string $email = null;
+
     public ?string $password = null;
+
     public ?string $password_confirmation = null;
+
     public ?string $nip = null;
+
     public ?string $phone = null;
     // public ?string $address = null;
 
@@ -60,7 +67,7 @@ class EditProfile extends Page implements HasForms
                 'email' => $activeUser->email,
             ]);
         }
-        
+
     }
 
     public function form(Form $form): Form
@@ -85,7 +92,7 @@ class EditProfile extends Page implements HasForms
                         ->label('Nama')
                         ->required()
                         ->visible($teacher),
-                        // ->columnSpanFull(),
+                    // ->columnSpanFull(),
                     TextInput::make('nip')
                         ->label('NIP')
                         ->nullable()
@@ -145,7 +152,7 @@ class EditProfile extends Page implements HasForms
                 'phone' => $this->phone,
                 // 'address' => $this->address,
             ]);
-            
+
             /** @var \App\Models\User */
             $user = Auth::user();
             $user->update($state);
@@ -154,19 +161,20 @@ class EditProfile extends Page implements HasForms
                 $teacher = $user->teachers;
                 $teacher->update($state);
             }
-            
+
             $this->reset(['password', 'password_confirmation']);
 
             Notification::make()
                 ->success()
                 ->title('Profil berhasil diperbarui')
                 ->send();
-            
+
         } catch (Halt $exception) {
             Notification::make()
                 ->danger()
                 ->title('Terjadi kesalahan!')
                 ->send();
+
             return;
         }
     }
