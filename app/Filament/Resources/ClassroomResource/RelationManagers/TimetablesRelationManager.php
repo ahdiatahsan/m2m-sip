@@ -13,13 +13,15 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TimetablesRelationManager extends RelationManager
 {
     protected static string $relationship = 'timetables';
+
     protected static ?string $title = 'Jadwal Pelajaran';
+
     protected static ?string $modelLabel = 'Jadwal';
+
     protected static ?string $pluralModelLabel = 'Jadwal';
 
     public function form(Form $form): Form
@@ -40,11 +42,14 @@ class TimetablesRelationManager extends RelationManager
                         ->native(false)
                         ->options(function (callable $get) {
                             $day = Day::find($get('day_id'));
-                            if (!$day) {
+                            if (! $day) {
                                 return [];
                             }
 
-                            return $day->timeslots->pluck('full_time', 'id');
+                            return $day->timeslots()
+                                ->select('timeslots.full_time', 'timeslots.id') // Explicitly specify the table
+                                ->orderBy('timeslots.id', 'asc') // Explicitly specify the table
+                                ->pluck('full_time', 'id');
                         })
                         ->visible(fn (Get $get) => $get('day_id') != null),
                 ]),
@@ -62,7 +67,7 @@ class TimetablesRelationManager extends RelationManager
                         ->native(false)
                         ->options(function (callable $get) {
                             $lesson = Lesson::find($get('lesson_id'));
-                            if (!$lesson) {
+                            if (! $lesson) {
                                 return [];
                             }
 
@@ -78,8 +83,17 @@ class TimetablesRelationManager extends RelationManager
     {
         return $table
             ->paginated(false)
+            ->modifyQueryUsing(
+                fn (Builder $query) => $query->join('timeslots', 'timetables.timeslot_id', '=', 'timeslots.id')
+                    ->join('days', 'timetables.day_id', '=', 'days.id')
+                    ->select('timetables.*')
+                    ->orderBy('days.id', 'asc')
+                    ->orderByRaw('CAST(timeslots.time_start AS TIME) ASC')
+            )
             ->recordTitleAttribute('timeslot.full_time')
             ->columns([
+                TextColumn::make('timeslot.time_start')
+                    ->label('Waktu Mulai'),
                 TextColumn::make('timeslot.full_time')
                     ->label('Waktu'),
                 TextColumn::make('lesson.name')
@@ -90,17 +104,11 @@ class TimetablesRelationManager extends RelationManager
             ->groups([
                 Group::make('day.name')
                     ->label('Hari')
-                    ->titlePrefixedWithLabel(false)
-
-                    ->orderQueryUsing(
-                        fn (Builder $query, string $direction) => $query->orderBy('id', 'asc')
-                    )
+                    ->titlePrefixedWithLabel(false),
             ])
             ->groupingSettingsHidden()
             ->defaultGroup('day.name')
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
             ])

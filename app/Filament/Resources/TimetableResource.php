@@ -3,18 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TimetableResource\Pages;
-use App\Filament\Resources\TimetableResource\RelationManagers;
 use App\Models\Timetable;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TimetableResource extends Resource
 {
@@ -22,11 +18,15 @@ class TimetableResource extends Resource
     // protected static bool $shouldRegisterNavigation = false;
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard';
+
     protected static ?string $navigationLabel = 'Jadwal Pembelajaran';
+
     protected static ?string $navigationGroup = 'Penjadwalan';
+
     protected static ?int $navigationSort = 5;
 
     protected static ?string $modelLabel = 'Jadwal Pembelajaran';
+
     protected static ?string $pluralModelLabel = 'Jadwal';
 
     public static function form(Form $form): Form
@@ -41,10 +41,16 @@ class TimetableResource extends Resource
     {
         return $table
             ->paginated(false)
+            ->modifyQueryUsing(
+                fn (Builder $query) => $query->join('timeslots', 'timetables.timeslot_id', '=', 'timeslots.id')
+                    ->join('days', 'timetables.day_id', '=', 'days.id')
+                    ->select('timetables.*')
+                    ->orderBy('days.id', 'asc')
+                    ->orderByRaw('CAST(timeslots.time_start AS TIME) ASC')
+            )
             ->columns([
                 TextColumn::make('day.name')
                     ->label('Hari'),
-                    // ->visible(false),
                 TextColumn::make('timeslot.full_time')
                     ->label('Waktu')
                     ->searchable(),
@@ -57,28 +63,26 @@ class TimetableResource extends Resource
             ->groups([
                 Group::make('day.name')
                     ->label('Hari')
-                    ->titlePrefixedWithLabel(false)
-
-                    ->orderQueryUsing(
-                        fn (Builder $query, string $direction) => $query->orderBy('id', 'asc')
-                    )
+                    ->titlePrefixedWithLabel(false),
             ])
             ->groupingSettingsHidden()
             ->defaultGroup('day.name')
             ->filters([
                 SelectFilter::make('classroom')
-                    ->relationship('classroom', 'name')
+                    ->relationship(
+                        'classroom',
+                        'name',
+                        modifyQueryUsing: fn (Builder $query) => $query->orderBy('id', 'asc')
+                    )
                     ->default(1)
                     ->label('Kelas')
                     ->searchable()
                     ->preload()
+                    ->selectablePlaceholder(false),
             ])
-            ->actions([
-                // Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                // ExportBulkAction::make() 
-            ]);
+            // ->hiddenFilterIndicators()
+            ->actions([])
+            ->bulkActions([]);
     }
 
     public static function getRelations(): array
