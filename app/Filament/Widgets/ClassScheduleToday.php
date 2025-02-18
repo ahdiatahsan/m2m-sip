@@ -2,7 +2,6 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Classroom;
 use App\Models\Timetable;
 use Carbon\Carbon;
 use Filament\Tables\Columns\TextColumn;
@@ -14,7 +13,9 @@ use Illuminate\Database\Eloquent\Builder;
 class ClassScheduleToday extends BaseWidget
 {
     protected static ?string $heading = 'Jadwal Hari Ini';
+
     protected int|string|array $columnSpan = 'full';
+
     protected static ?int $sort = 3;
 
     public function table(Table $table): Table
@@ -36,7 +37,7 @@ class ClassScheduleToday extends BaseWidget
                     ->relationship(
                         'classroom',
                         'name',
-                        modifyQueryUsing: fn(Builder $query) => $query->orderBy('id', 'asc')
+                        modifyQueryUsing: fn (Builder $query) => $query->orderBy('id', 'asc')
                     )
                     ->default(1)
                     ->label('Pilih Kelas')
@@ -55,6 +56,7 @@ class ClassScheduleToday extends BaseWidget
                         $currentTime = Carbon::createFromFormat('H:i:s', $now->format('H:i:s'));
                         $startTime = Carbon::createFromFormat('H:i:s', $record->timeslot->time_start);
                         $endTime = Carbon::createFromFormat('H:i:s', $record->timeslot->time_end);
+
                         return $currentTime->between($startTime, $endTime) ? 'Berlangsung' : 'Belum Dimulai';
                     })
                     ->colors([
@@ -64,7 +66,6 @@ class ClassScheduleToday extends BaseWidget
             ])
             ->actions([]);
     }
-
 
     public static function canView(): bool
     {
