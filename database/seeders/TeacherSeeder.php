@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Teacher;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TeacherSeeder extends Seeder
@@ -19,7 +18,7 @@ class TeacherSeeder extends Seeder
             'nip' => '0',
             'phone' => '0',
             'lesson_id' => 28,
-            'user_id' => 4
+            'user_id' => 4,
         ]);
     }
 }

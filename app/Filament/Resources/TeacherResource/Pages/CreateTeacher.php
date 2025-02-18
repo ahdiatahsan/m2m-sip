@@ -4,7 +4,6 @@ namespace App\Filament\Resources\TeacherResource\Pages;
 
 use App\Filament\Resources\TeacherResource;
 use App\Models\User;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,10 +14,11 @@ class CreateTeacher extends CreateRecord
     protected function handleRecordCreation(array $data): Model
     {
         // dd($data);
-        $user = new User();
+        $user = new User;
         $user->name = $data['name'];
         $user->email = $data['email'];
         $user->password = $data['password'];
+        $user->email_verified_at = now();
         $user->save();
         $user->assignRole('teacher');
 

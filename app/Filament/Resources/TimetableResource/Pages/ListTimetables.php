@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\TimetableResource\Pages;
 
 use App\Filament\Resources\TimetableResource;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use pxlrbt\FilamentExcel\Actions\Pages\ExportAction;
 use pxlrbt\FilamentExcel\Columns\Column;
@@ -16,7 +15,7 @@ class ListTimetables extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            ExportAction::make() 
+            ExportAction::make()
                 ->exports([
                     ExcelExport::make()
                         // ->withColumns([
@@ -24,8 +23,8 @@ class ListTimetables extends ListRecords
                         // ])
                         ->fromTable()
                         ->withFilename(fn ($resource) => $resource::getModelLabel())
-                        ->withWriterType(\Maatwebsite\Excel\Excel::XLSX)
-                ]), 
-            ];
+                        ->withWriterType(\Maatwebsite\Excel\Excel::XLSX),
+                ]),
+        ];
     }
 }

@@ -12,6 +12,8 @@ class AdminWidgets extends BaseWidget
 {
     protected static ?string $pollingInterval = '10s';
 
+    protected static ?int $sort = 1;
+
     protected function getStats(): array
     {
         return [
@@ -21,8 +23,8 @@ class AdminWidgets extends BaseWidget
         ];
     }
 
-    public static function canView(): bool 
+    public static function canView(): bool
     {
         return auth()->user()->hasAnyRole(['super_admin', 'admin']);
-    } 
+    }
 }

@@ -15,7 +15,7 @@ class EditUser extends EditRecord
     {
         return [
             Actions\DeleteAction::make()
-                ->hidden(fn (User $record): bool => $record->hasRole('super_admin'))
+                ->hidden(fn (User $record): bool => $record->hasRole('super_admin')),
         ];
     }
 }

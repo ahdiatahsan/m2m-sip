@@ -3,19 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
-use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
@@ -23,10 +18,13 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
+
     protected static ?string $navigationLabel = 'Akun';
+
     protected static ?string $navigationGroup = 'Pengguna';
 
     protected static ?string $modelLabel = 'Akun';
+
     protected static ?string $pluralModelLabel = 'Akun';
 
     public static function form(Form $form): Form
@@ -85,7 +83,7 @@ class UserResource extends Resource
                         'teacher' => 'warning',
                         'student' => 'info',
                         'panel_user' => 'gray',
-                    })
+                    }),
             ])
             ->filters([
                 //

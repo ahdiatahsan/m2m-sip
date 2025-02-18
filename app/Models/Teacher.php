@@ -19,7 +19,6 @@ class Teacher extends Model
         'nip',
         'code',
         'phone',
-        // 'address',
         'user_id',
         'lesson_id',
     ];

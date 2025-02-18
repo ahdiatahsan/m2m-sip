@@ -17,7 +17,7 @@ class Timeslot extends Model
     protected $fillable = [
         'time_start',
         'time_end',
-        'full_time'
+        'full_time',
     ];
 
     public function days()

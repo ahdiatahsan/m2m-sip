@@ -7,14 +7,15 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TimeslotsRelationManager extends RelationManager
 {
     protected static string $relationship = 'timeslots';
+
     protected static ?string $title = 'Slot Waktu';
+
     protected static ?string $modelLabel = 'Waktu';
+
     protected static ?string $pluralModelLabel = 'Waktu';
 
     public function form(Form $form): Form

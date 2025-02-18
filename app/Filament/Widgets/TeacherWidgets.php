@@ -11,6 +11,8 @@ class TeacherWidgets extends BaseWidget
 {
     protected static ?string $pollingInterval = '10s';
 
+    protected static ?int $sort = 2;
+
     protected function getStats(): array
     {
         $teacher = Teacher::query()->where('user_id', auth()->user()->id)->first();
@@ -22,8 +24,8 @@ class TeacherWidgets extends BaseWidget
         ];
     }
 
-    public static function canView(): bool 
+    public static function canView(): bool
     {
         return auth()->user()->hasRole('teacher');
-    } 
+    }
 }

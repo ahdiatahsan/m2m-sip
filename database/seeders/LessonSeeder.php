@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Lesson;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LessonSeeder extends Seeder
@@ -68,7 +67,7 @@ class LessonSeeder extends Seeder
             ['code' => '4', 'name' => 'Shalat Ashar'],
             ['code' => '5', 'name' => 'Tadarrus'],
             ['code' => '6', 'name' => "Sima'an/Penguatan Bahasa"],
-            ['code' => '7', 'name' => "BK/Wali Kelas"],
+            ['code' => '7', 'name' => 'BK/Wali Kelas'],
             ['code' => '8', 'name' => "Jum'at Bersih/Senam"],
         ]);
     }

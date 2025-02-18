@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\TimeslotResource\Pages;
 
 use App\Filament\Resources\TimeslotResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 
