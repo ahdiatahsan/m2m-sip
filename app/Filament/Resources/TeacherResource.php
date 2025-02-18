@@ -3,22 +3,21 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TeacherResource\Pages;
-use App\Filament\Resources\TeacherResource\RelationManagers;
+use App\Filament\Resources\TeacherResource\RelationManagers\TeacherRelationManager;
 use App\Models\Teacher;
 use App\Models\User;
-use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Section as InfolistSection;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
 
 class TeacherResource extends Resource
@@ -26,10 +25,13 @@ class TeacherResource extends Resource
     protected static ?string $model = Teacher::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
+
     protected static ?string $navigationLabel = 'Guru';
+
     protected static ?string $navigationGroup = 'Pengguna';
 
     protected static ?string $modelLabel = 'Guru';
+
     protected static ?string $pluralModelLabel = 'Guru';
 
     public static function form(Form $form): Form
@@ -130,21 +132,11 @@ class TeacherResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('code')
-                    ->label('Kode')
+                TextColumn::make('nip')
+                    ->label('Nomor Induk Pegawai')
                     ->searchable(),
                 TextColumn::make('name')
                     ->label('Nama')
-                    ->searchable(),
-                TextColumn::make('nip')
-                    ->label('NIP'),
-                TextColumn::make('phone')
-                    ->label('Telepon'),
-                TextColumn::make('user.email')
-                    ->label('Email')
-                    ->searchable(),
-                TextColumn::make('lesson.name')
-                    ->label('Mata Pelajaran')
                     ->searchable(),
             ])
             ->defaultSort('code', 'asc')
@@ -152,11 +144,12 @@ class TeacherResource extends Resource
                 SelectFilter::make('lesson')
                     ->relationship('lesson', 'name')
                     ->label('Mata Pelajaran')
-                    ->preload()
+                    ->preload(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -165,10 +158,35 @@ class TeacherResource extends Resource
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                InfolistSection::make('Informasi Guru')
+                    ->schema([
+                        TextEntry::make('name')
+                            ->label('Nama Lengkap'),
+                        TextEntry::make('code')
+                            ->label('Kode Guru'),
+                        TextEntry::make('nip')
+                            ->label('Nomor Induk Pegawai')
+                            ->default('-'),
+                        TextEntry::make('lesson.name')
+                            ->label('Mata Pelajaran'),
+                        TextEntry::make('phone')
+                            ->label('Nomor Telepon')
+                            ->default('-'),
+                        TextEntry::make('user.email')
+                            ->label('Alamat Email'),
+                    ])
+                    ->columns(2),
+            ]);
+    }
+
     public static function getRelations(): array
     {
         return [
-            //
+            TeacherRelationManager::class,
         ];
     }
 
@@ -176,6 +194,7 @@ class TeacherResource extends Resource
     {
         return [
             'index' => Pages\ListTeachers::route('/'),
+            'view' => Pages\ViewTeacher::route('/{record}'),
             'create' => Pages\CreateTeacher::route('/create'),
             'edit' => Pages\EditTeacher::route('/{record}/edit'),
         ];
