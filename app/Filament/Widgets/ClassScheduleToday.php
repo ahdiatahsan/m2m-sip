@@ -47,7 +47,8 @@ class ClassScheduleToday extends BaseWidget
             ])
             ->columns([
                 TextColumn::make('timeslot.full_time')->label('Waktu'),
-                TextColumn::make('classroom.name')->label('Kelas'),
+                TextColumn::make('lesson.name')->label('Mata Pelajaran'),
+                TextColumn::make('teacher.name')->label('Nama Guru'),
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
