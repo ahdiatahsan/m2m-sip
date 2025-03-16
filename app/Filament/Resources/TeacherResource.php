@@ -132,14 +132,14 @@ class TeacherResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('nip')
-                    ->label('Nomor Induk Pegawai')
-                    ->searchable(),
                 TextColumn::make('name')
                     ->label('Nama')
                     ->searchable(),
+                TextColumn::make('nip')
+                    ->label('Nomor Induk Pegawai')
+                    ->searchable(),
             ])
-            ->defaultSort('code', 'asc')
+            ->defaultSort('name', 'asc')
             ->filters([
                 SelectFilter::make('lesson')
                     ->relationship('lesson', 'name')
